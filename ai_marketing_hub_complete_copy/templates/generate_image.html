@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Generate Image{% endblock %}
+
+{% block content %}
+  <!-- Hero panel with full-bleed translucent background -->
+  <div class="hero-panel">
+    <div class="site-content">
+      <!-- Back button centered -->
+      <div class="buttons">
+        <a href="{{ url_for('home') }}" class="primary">← Back to Home</a>
+      </div>
+
+      <h1>Enter Your Prompt</h1>
+
+      <!-- Center the form & cap its max-width -->
+      <form
+        method="post"
+        action="{{ url_for('generate_image') }}"
+        style="
+          width: 100%;
+          max-width: 1100px;
+          margin: 0 auto;
+          display: flex;
+          gap: 1rem;
+        "
+      >
+        <input
+          id="prompt"
+          name="prompt"
+          type="text"
+          placeholder="Describe the image you want…"
+          value="{{ prompt }}"
+          required
+          style="
+            flex: 1;          /* give 4× the space of the button */
+            min-width: 800px; /* never shrink below 400px */
+          "
+        />
+        <button
+          type="submit"
+          class="primary"
+          style="flex: 1;"
+        >
+          Generate
+        </button>
+      </form>
+
+      {% if image_url %}
+        <div style="width:100%; margin-top:2rem; text-align:center;">
+          <img
+            src="{{ image_url }}"
+            alt="Generated image"
+            style="max-width:100%; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.3);"
+          />
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

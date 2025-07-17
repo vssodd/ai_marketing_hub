@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}{% endblock %} — AI Marketing Hub</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <!-- Full-page video background -->
+  <div class="video-bg">
+    <video
+      id="bg-video"
+      class="bg-video"
+      autoplay muted loop playsinline
+      poster="{{ url_for('static', filename='media/videos/fallback.jpg') }}"
+      preload="auto"
+    >
+      <source src="{{ url_for('static', filename='media/videos/background.mp4') }}" type="video/mp4">
+      <source src="{{ url_for('static', filename='media/videos/background.webm') }}" type="video/webm">
+    </video>
+  </div>
+
+  <!-- Main content container -->
+  <div class="container">
+    {% block content %}{% endblock %}
+  </div>
+
+  <!-- Google Trends loader (shared across pages if needed) -->
+  <script src="https://ssl.gstatic.com/trends_nrtr/4116_RC01/embed_loader.js"></script>
+
+  <!-- Theme init & toggle -->
+  <script>
+    (function(){
+      const btn  = document.getElementById('theme-toggle'),
+            root = document.documentElement,
+            saved = localStorage.getItem('theme') === 'dark' ? 'dark' : 'light';
+      root.setAttribute('data-theme', saved);
+      if (btn) {
+        btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+        btn.addEventListener('click', () => {
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          localStorage.setItem('theme', next);
+          btn.textContent = next === 'dark' ? '☀️' : '🌙';
+        });
+      }
+    })();
+  </script>
+
+  <!-- Mobile-fallback for video -->
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
